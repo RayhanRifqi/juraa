@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ulang Tahun</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi Step Form</title>
+  <link rel="stylesheet" href="./styles/style.css">
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -13,7 +14,6 @@
       align-items: center;
       min-height: 100vh;
       background: #f2f2f2;
-      margin: 0;
     }
 
     .step {
@@ -23,8 +23,7 @@
       padding: 30px;
       border-radius: 20px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      width: 90%;
-      max-width: 400px;
+      width: 320px;
     }
 
     .step.active {
@@ -55,14 +54,9 @@
     button:hover {
       background: #3a9cdc;
     }
-
-    .ucapan {
-      font-size: 1.2rem;
-      color: #ff4081;
-      margin-top: 20px;
-    }
   </style>
 </head>
+
 <body>
   <!-- Step 1 -->
   <div id="step1" class="step active">
@@ -79,8 +73,9 @@
 
   <!-- Step 3 -->
   <div id="step3" class="step">
-    <h2>🎉 Selamat Ulang Tahun!</h2>
-    <p id="hasil" class="ucapan"></p>
+    <h2>✅ Konfirmasi</h2>
+    <p id="hasil"></p>
+    <button id="doneBtn">Selesai</button>
   </div>
 
   <!-- GSAP -->
@@ -92,8 +87,10 @@
     const step1 = document.getElementById("step1");
     const step2 = document.getElementById("step2");
     const step3 = document.getElementById("step3");
+
     const loginBtn = document.getElementById("loginBtn");
     const nextBtn = document.getElementById("nextBtn");
+    const doneBtn = document.getElementById("doneBtn");
     const hasil = document.getElementById("hasil");
 
     function goToStep(current, next) {
@@ -114,15 +111,27 @@
     });
 
     nextBtn.addEventListener("click", () => {
-      const nama = document.getElementById("nama").value.trim();
-      if (nama === "") {
+      const nama = document.getElementById("nama").value;
+      if (nama.trim() === "") {
         Swal.fire("Ups!", "Nama ga boleh kosong 😅", "error");
         return;
       }
-
-      hasil.innerHTML = `Hai ${nama} 💖<br>Semoga hari ulang tahunmu penuh dengan kebahagiaan dan cinta! 🎂🎁`;
+      hasil.textContent = `Halo ${nama}, data kamu sudah tersimpan!`;
       goToStep(step2, step3);
+    });
+
+    doneBtn.addEventListener("click", () => {
+      Swal.fire({
+        icon: "success",
+        title: "Selesai 🎉",
+        text: "Siap-siap ya, ada kejutan buat kamu 💖",
+        timer: 2000,
+        showConfirmButton: false
+      }).then(() => {
+        window.location.href = "birthday.html"; // Redirect ke halaman ucapan
+      });
     });
   </script>
 </body>
+
 </html>
